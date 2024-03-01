@@ -1,0 +1,73 @@
+# Graphics Pipeline Creation Library Design Document
+
+## Overview
+
+This document outlines the design and architecture of a C library for creating and managing graphics pipelines using the Vulkan API, specifically tailored for use in game engines. The library aims to support all major use cases, ensuring efficiency, high performance, and low latency.
+
+## Design Goals
+
+- **Efficiency**: Optimize the use of system resources to ensure fast execution.
+- **Performance**: Achieve high frame rates and low latency suitable for real-time gaming applications.
+- **Modularity**: Structure the library to facilitate easy integration and reuse within different parts of a game engine.
+- **Compatibility**: Support all major cases and configurations required by modern game engines.
+- **Simplicity**: Provide a simple and intuitive API for users, abstracting the complexity of Vulkan's pipeline creation.
+
+## Components
+
+### 1. Shader Stage Creation
+
+- **Objective**: To set up a `VkPipelineShaderStageCreateInfo` structure for each shader stage (vertex, fragment, geometry, etc.).
+- **Functions**:
+  - `createShaderStage(VkDevice device, VkShaderStageFlagBits stage, const char* shaderSrc)`: Creates a shader stage given the device, stage flag, and shader source code.
+  - `destroyShaderStage(VkShaderModule shaderModule)`: Cleans up resources allocated for a shader stage.
+
+### 2. Pipeline Configuration
+
+- **Objective**: To configure the graphics pipeline with `VkGraphicsPipelineCreateInfo`, including render passes, subpasses, and fixed-function state objects.
+- **Structures**:
+  - `PipelineConfigInfo`: Encapsulates all necessary information for pipeline configuration.
+- **Functions**:
+  - `initDefaultPipelineConfigInfo(PipelineConfigInfo* configInfo)`: Initializes a `PipelineConfigInfo` structure with default values.
+  - `configurePipeline(VkDevice device, PipelineConfigInfo* configInfo, VkPipeline* pipeline)`: Configures a pipeline based on the provided `configInfo`.
+
+### 3. Pipeline Creation
+
+- **Objective**: To create the graphics pipeline by calling `vkCreateGraphicsPipelines`.
+- **Functions**:
+  - `createGraphicsPipeline(VkDevice device, VkPipelineLayout pipelineLayout, VkRenderPass renderPass, PipelineConfigInfo* configInfo, VkPipeline* pipeline)`: Creates a graphics pipeline.
+
+### 4. Utility Functions
+
+- **Objective**: To provide additional utility functions for common tasks.
+- **Functions**:
+  - `readFile(const char* filename, std::vector<char>& buffer)`: Reads the contents of a file into a buffer, useful for loading shader code.
+
+## Usage
+
+1. Initialize Vulkan and create a `VkDevice`.
+2. Use `createShaderStage` for each shader stage required by your pipeline.
+3. Create and initialize a `PipelineConfigInfo` structure with `initDefaultPipelineConfigInfo`.
+4. Call `configurePipeline` to apply your configuration to a `VkGraphicsPipelineCreateInfo` structure.
+5. Finally, use `createGraphicsPipeline` to create the pipeline.
+
+## Error Handling
+
+- The library will use Vulkan's error handling conventions.
+- Each function will return a `VkResult` to indicate success or the type of error encountered.
+- Detailed error logging will be provided for debugging and development purposes.
+
+## Testing and Validation
+
+- **Unit Tests**: Comprehensive unit tests will be written for each component of the library.
+- **Integration Tests**: Test the library's integration with a mock game engine.
+- **Performance Benchmarks**: Benchmark the library in various scenarios to ensure it meets performance goals.
+
+## Future Work
+
+- **Extensions Support**: Investigate and potentially integrate support for Vulkan extensions.
+- **Dynamic Pipeline States**: Extend the library to support dynamic pipeline states for more flexible rendering.
+- **Documentation and Examples**: Provide detailed documentation and example usage scenarios to aid developers.
+
+## Conclusion
+
+This design document outlines the structure and functionalities of a C library for creating graphics pipelines with Vulkan. By focusing on efficiency, performance, and simplicity, the library aims to be a valuable tool for game developers leveraging Vulkan for their rendering needs.

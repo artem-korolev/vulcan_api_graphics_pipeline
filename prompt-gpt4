@@ -1,0 +1,8 @@
+Generate a high quality design document that can be used by our project team to design the software described below. It should be complete and usable as the sole design documentation to get our team to complete our project.
+
+--
+
+I need to create structure and all functions in C language implementing graphics pipeline creation in Vulkan API. This step is complex and involves setting up a VkPipelineShaderStageCreateInfo for each shader stage, configuring the pipeline with VkGraphicsPipelineCreateInfo, and then creating the pipeline by calling vkCreateGraphicsPipelines.
+
+my graphic pipeline must support all major cases be efficient and run with best performance and low latency.
+It will be used in game engine. I need to structure it as C library so I can reuse it
